@@ -39,6 +39,25 @@ while true; do
     esac
 done
 
+
+sudo systemctl enable iwd
+
+sudo echo  -e "[General]\nEnableNetworkConfiguration=true" > /etc/iwd/main.conf
+
+sudo systemctl restart iwd
+
+sudo echo "nameserver 9.9.9.9" > /etc/resolv.conf
+
+sudo echo -e "[Time]\nNTP=0.uk.pool.ntp.org 1.uk.pool.ntp.org 2.uk.pool.ntp.org 3.uk.pool.ntp.org\nFallbackNTP=0.arch.pool.ntp.org 1.arch.pool.ntp.org 2.arch.pool.ntp.org 3.arch.pool.ntp.org" > /etc/systemd/timesyncd.conf
+
+sudo systemctl enable systemd-timesyncd
+
+sudo systemctl start systemd-timesyncd
+
+sudo timedatectl set-ntp true
+
+sudo hwclock --systohc
+
 echo -e ""
 echo -e "${GREEN}--------------------"
 echo -e "Updating System"
@@ -53,9 +72,11 @@ echo -e "Installing Packages"
 echo -e "--------------------${ENDCOLOR}"
 echo -e ""
 
-sudo pacman -Syy alacritty bash-completion code ffmpeg flameshot fuse gimp gnome-calculator gnome-color-manager gnome-disk-utility gnome-text-editor gnu-free-fonts gst-libav gst-plugin-pipewire gst-plugins-ugly gvfs gvfs-smb htop i3-wm lib32-pipewire loupe lxappearance-gtk3 nano neofetch nitrogen ntfs-3g nvtop obs-studio pacman-contrib papirus-icon-theme pipewire pipewire-alsa pipewire-audio pipewire-jack pipewire-pulse polybar qt5-graphicaleffects qt5-quickcontrols2 qt5-svg rofi rtkit sddm steam totem ttf-jetbrains-mono ttf-jetbrains-mono-nerd unzip wget wireplumber xf86-input-evdev xf86-input-synaptics yt-dlp
+sudo pacman -Syy alacritty bash-completion cmake code debugedit fakeroot ffmpeg flameshot fuse gcc git gnome-color-manager gnome-disk-utility gnu-free-fonts gst-libav gst-plugin-pipewire gst-plugins-ugly gvfs gvfs-smb htop i3-wm loupe lxappearance-gtk3 make nitrogen ntfs-3g nvtop pacman-contrib papirus-icon-theme polybar qt5-graphicaleffects qt5-quickcontrols2 qt5-svg rofi rtkit sddm sudo tar totem ttf-jetbrains-mono ttf-jetbrains-mono-nerd unzip wget wireplumber xf86-input-evdev xf86-input-synaptics xf86-video-amdgpu xf86-video-fbdev yt-dlp
 
 sudo usermod -a -G rtkit $USER
+sudo usermod -a -G git $USER
+sudo usermod -a -G wheel $USER
 
 wget https://github.com/catppuccin/gtk/releases/download/v0.7.5/Catppuccin-Mocha-Standard-Mauve-Dark.zip -P $DIRMAIN/assets
 
@@ -76,8 +97,20 @@ echo -e "Installing AUR Packages"
 echo -e "--------------------${ENDCOLOR}"
 echo -e ""
 
-yay -S vesktop-bin --noconfirm
-yay -S prismlauncher-qt5-bin --noconfirm
+yay -S bibata-cursor-theme-bin
+#yay -S vesktop-bin --noconfirm
+#yay -S prismlauncher-qt5-bin --noconfirm
+
+echo -e "[Icon Theme]\nInherits=Bibata-Modern-Classic" | sudo tee /usr/share/icons/default/index.theme
+
+mkdir ~/PrismLauncher
+cd ~/PrismLauncher
+wget https://github.com/Diegiwg/PrismLauncher-Cracked/releases/download/v8.4.1/PrismLauncher-Linux-Qt5-Portable-v8.4.1.tar.gz
+
+tar -xvf PrismLauncher-Linux-Qt5-Portable-v8.4.1.tar.gz
+rm PrismLauncher-Linux-Qt5-Portable-v8.4.1.tar.gz
+cd ~/ 
+
 
 echo -e ""
 echo -e "${GREEN}--------------------"
@@ -192,7 +225,9 @@ echo -e "Enabling services"
 echo -e "--------------------${ENDCOLOR}"
 echo -e ""
 
-systemctl --user enable pipewire pipewire-pulse
+#systemctl --user enable pipewire pipewire-pulse
+
+sudo systemctl disable iwd
 sudo systemctl enable NetworkManager
 sudo systemctl disable gdm
 sudo systemctl disable lightdm
