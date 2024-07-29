@@ -24,8 +24,8 @@ cat <<"EOF"
 +-------------------------------------------------------+
 EOF
 echo -e "${BLUE}|${ENDCOLOR}                                                       ${BLUE}|"
-echo -e "${BLUE}|${ENDCOLOR} Version: 1.2                                          ${BLUE}|"
-echo -e "${BLUE}|${ENDCOLOR} By Justus0405                                         ${BLUE}|"
+echo -e "${BLUE}|${ENDCOLOR} Version: 1.0                                          ${BLUE}|"
+echo -e "${BLUE}|${ENDCOLOR} By clownfish45                                          ${BLUE}|"
 echo -e "${BLUE}|${ENDCOLOR}                                                       ${BLUE}|"
 echo -e "${BLUE}+-------------------------------------------------------+"
 echo -e "${ENDCOLOR}"
