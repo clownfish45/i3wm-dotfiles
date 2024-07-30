@@ -24,7 +24,7 @@ cat <<"EOF"
 +-------------------------------------------------------+
 EOF
 echo -e "${BLUE}|${ENDCOLOR}                                                       ${BLUE}|"
-echo -e "${BLUE}|${ENDCOLOR} Version: 1.0                                          ${BLUE}|"
+echo -e "${BLUE}|${ENDCOLOR} Version: 1.1                                          ${BLUE}|"
 echo -e "${BLUE}|${ENDCOLOR} By clownfish45                                          ${BLUE}|"
 echo -e "${BLUE}|${ENDCOLOR}                                                       ${BLUE}|"
 echo -e "${BLUE}+-------------------------------------------------------+"
@@ -131,6 +131,7 @@ unzip commandlinetools-linux-11076708_latest.zip
 
 rm commandlinetools-linux-11076708_latest.zip
 
+echo -e "\nexport ANDROID_HOME=/usr/bin/android-sdk" >> ~/.bashrc
 export ANDROID_HOME=/usr/bin/android-sdk
 
 cd cmdline-tools
@@ -139,8 +140,10 @@ mkdir latest
 
 mv NOTICE.txt bin lib source.properties latest/
 
+echo -e "\nexport PATH='$PATH:$ANDROID_HOME/cmdline-tools/latest/bin'" >> ~/.bashrc
 export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin"
 
+echo -e "\nexport JAVA_HOME=/usr/lib/jvm/default/" >> ~/.bashrc
 export JAVA_HOME=/usr/lib/jvm/default/
 
 sdkmanager --update
@@ -149,13 +152,14 @@ sdkmanager --install "emulator"
 sdkmanager --install "build-tools;34.0.0"
 sdkmanager --install "platforms;android-34"
 export PATH="$PATH:$ANDROID_HOME/platform-tools"
-
+echo -e "\nexport PATH='$PATH:$ANDROID_HOME/platform-tools'" >> ~/.bashrc
 cd /usr/bin/
 sudo wget https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.22.3-stable.tar.xz
 sudo tar -xvf flutter_linux_3.22.3-stable.tar.xz
 sudo chmod -R 777 /usr/bin/flutter
 sudo rm flutter_linux_3.22.3-stable.tar.xz
 export PATH="$PATH:/usr/bin/flutter/bin"
+echo -e "\nexport PATH='$PATH:/usr/bin/flutter/bin'" >> ~/.bashrc
 flutter config --no-analytics
 flutter --disable-analytics
 flutter doctor --android-licenses
