@@ -58,6 +58,8 @@ sudo timedatectl set-ntp true
 
 sudo hwclock --systohc
 
+sleep 5
+
 echo -e ""
 echo -e "${GREEN}--------------------"
 echo -e "Updating System"
@@ -72,7 +74,7 @@ echo -e "Installing Packages"
 echo -e "--------------------${ENDCOLOR}"
 echo -e ""
 
-sudo pacman -Syy alacritty bash-completion cmake code debugedit fakeroot ffmpeg flameshot fuse gcc git gnome-color-manager gnome-disk-utility gnu-free-fonts gst-libav gst-plugin-pipewire gst-plugins-ugly gvfs gvfs-smb htop i3-wm loupe lxappearance-gtk3 make nitrogen ntfs-3g nvtop pacman-contrib papirus-icon-theme polybar qt5-graphicaleffects qt5-quickcontrols2 qt5-svg rofi rtkit sddm sudo tar totem ttf-jetbrains-mono ttf-jetbrains-mono-nerd unzip wget wireplumber xf86-input-evdev xf86-input-synaptics xf86-video-amdgpu xf86-video-fbdev yt-dlp
+sudo pacman -Syy alacritty bash-completion cmake code curl debugedit fakeroot fastfetch ffmpeg flameshot fuse gcc git gnome-color-manager gnome-disk-utility gnu-free-fonts gst-libav gst-plugin-pipewire gst-plugins-ugly gvfs gvfs-smb htop i3-wm jdk-openjdk loupe lxappearance-gtk3 make nitrogen ntfs-3g nvtop pacman-contrib papirus-icon-theme polybar qt5-graphicaleffects qt5-quickcontrols2 qt5-svg rofi rtkit sddm sudo tar totem ttf-jetbrains-mono ttf-jetbrains-mono-nerd unzip wget which wireplumber xf86-input-evdev xf86-input-synaptics xf86-video-amdgpu xf86-video-fbdev xz yt-dlp zip
 
 sudo usermod -a -G rtkit $USER
 sudo usermod -a -G git $USER
@@ -111,6 +113,63 @@ tar -xvf PrismLauncher-Linux-Qt5-Portable-v8.4.1.tar.gz
 rm PrismLauncher-Linux-Qt5-Portable-v8.4.1.tar.gz
 cd ~/ 
 
+echo -e ""
+echo -e "${GREEN}--------------------"
+echo -e "Installing Android SDK and Flutter"
+echo -e "--------------------${ENDCOLOR}"
+echo -e ""
+
+sudo mkdir /usr/bin/android-sdk
+
+sudo chmod -R 777 /usr/bin/android-sdk
+
+cd /usr/bin/android-sdk
+
+wget https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip
+
+unzip commandlinetools-linux-11076708_latest.zip
+
+rm commandlinetools-linux-11076708_latest.zip
+
+export ANDROID_HOME=/usr/bin/android-sdk
+
+cd cmdline-tools
+
+mkdir latest
+
+mv NOTICE.txt bin lib source.properties latest/
+
+export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin"
+
+export JAVA_HOME=/usr/lib/jvm/default/
+
+sdkmanager --update
+sdkmanager --install "platform-tools"
+sdkmanager --install "emulator"
+sdkmanager --install "build-tools;34.0.0"
+sdkmanager --install "platforms;android-34"
+export PATH="$PATH:$ANDROID_HOME/platform-tools"
+
+cd /usr/bin/
+sudo wget https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.22.3-stable.tar.xz
+sudo tar -xvf flutter_linux_3.22.3-stable.tar.xz
+sudo chmod -R 777 /usr/bin/flutter
+sudo rm flutter_linux_3.22.3-stable.tar.xz
+export PATH="$PATH:/usr/bin/flutter/bin"
+flutter config --no-analytics
+flutter --disable-analytics
+flutter doctor --android-licenses
+cd $ANDROID_HOME
+mkdir -p system-images/android-34/google_apis/x86_64
+cd system-images/android-34/google_apis/x86_64
+wget https://android.googlesource.com/platform/prebuilts/android-emulator-build/system-images/+archive/refs/heads/main/generic/system-images/android-34/google_apis/x86_64.tar.gz 
+tar -xvf x86_64.tar.gz
+rm x86_64.tar.gz
+gunzip system.img.gz
+gunzip vendor.img.gz
+cd ~/i3wm-dotfiles
+
+avdmanager --verbose create avd --force --name "pixel_6_34" --package "system-images;android-34;google_apis;x86_64" --tag "google_apis" --abi "x86_64" --device "pixel_6"
 
 echo -e ""
 echo -e "${GREEN}--------------------"
