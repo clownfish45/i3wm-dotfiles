@@ -74,7 +74,7 @@ echo -e "Installing Packages"
 echo -e "--------------------${ENDCOLOR}"
 echo -e ""
 
-sudo pacman -Syy alacritty bash-completion cmake code curl debugedit dosfstools fakeroot fastfetch ffmpeg flameshot fuse gcc git gnome-color-manager gnome-disk-utility gnu-free-fonts gst-libav gst-plugin-pipewire gst-plugins-ugly gvfs gvfs-smb htop i3-wm jdk-openjdk loupe lxappearance-gtk3 make nitrogen ntfs-3g nvtop pacman-contrib papirus-icon-theme polybar qt5-graphicaleffects qt5-quickcontrols2 qt5-svg rofi rtkit sddm sudo tar totem ttf-jetbrains-mono ttf-jetbrains-mono-nerd unzip wget which wireplumber xf86-input-evdev xf86-input-synaptics xf86-video-amdgpu xf86-video-fbdev xz yt-dlp zip
+sudo pacman -Syy alacritty bash-completion cmake code curl debugedit dosfstools fakeroot fastfetch ffmpeg flameshot fuse gcc git gnome-color-manager gnome-disk-utility gnu-free-fonts gst-libav gst-plugin-pipewire gst-plugins-ugly gvfs gvfs-smb htop i3-wm jdk-openjdk loupe lxappearance-gtk3 make nitrogen ntfsprogs ntfs-3g nvtop pacman-contrib papirus-icon-theme polybar qt5-graphicaleffects qt5-quickcontrols2 qt5-svg rofi rtkit sddm sudo tar totem ttf-jetbrains-mono ttf-jetbrains-mono-nerd unzip wget which wireplumber xf86-input-evdev xf86-input-synaptics xf86-video-amdgpu xf86-video-fbdev xz yt-dlp zip
 
 sudo usermod -a -G rtkit $USER
 sudo usermod -a -G git $USER
